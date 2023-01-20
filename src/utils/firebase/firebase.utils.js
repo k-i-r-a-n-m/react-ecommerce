@@ -9,13 +9,7 @@ import {
 } from "firebase/auth";
 
 // setting up fireStore for database
-import {
-    getFirestore,
-    doc,
-    getDoc,
-    setDoc
-} from 'firebase/firestore'
-
+import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 
 // basic config for firebase instance connection
 const firebaseConfig = {
@@ -38,44 +32,42 @@ provider.setCustomParameters({
   prompt: "select_account",
 });
 
+// auth is common for all the PROVIDER (google,facebook,gihub..etc)
 export const auth = getAuth();
 export const siginInWithGooglePopup = () => signInWithPopup(auth, provider);
-
+export const siginInWithGoogleRedirect = () =>
+  signInWithRedirect(auth, provider);
 
 // initialize fireStore
-export const db = getFirestore()
+export const db = getFirestore();
 
-export const createUserDocumentFromAuth = async(userAuth)=>{
-    // getting document reference is like primary key
-    const userDocRef = doc(db,'users',userAuth.uid)
+export const createUserDocumentFromAuth = async (userAuth) => {
+  // getting document reference is like primary key
+  const userDocRef = doc(db, "users", userAuth.uid);
 
-    console.log(userDocRef)
+  console.log(userDocRef);
 
-    // getting a document using getDoc('id')
-    const userSnapshot = await getDoc(userDocRef);
-    console.log(userSnapshot)
-    console.log(userSnapshot.exists())
+  // getting a document using getDoc('id')
+  const userSnapshot = await getDoc(userDocRef);
+  console.log(userSnapshot);
+  console.log(userSnapshot.exists());
 
-    // if user data does not exists
-    if(!userSnapshot.exists()){
-        const {displayName,email} = userAuth
-        const createdAt = new Date()
-        try{
-            await setDoc(userDocRef,{
-                displayName,
-                email,
-                createdAt
-            })
-        }catch(error){
-            console.log("error.creating user:",error.message)
-        }
+  // if user data does not exists
+  if (!userSnapshot.exists()) {
+    const { displayName, email } = userAuth;
+    const createdAt = new Date();
+    try {
+      await setDoc(userDocRef, {
+        displayName,
+        email,
+        createdAt,
+      });
+    } catch (error) {
+      console.log("error.creating user:", error.message);
     }
+  }
 
+  // if user data exists
 
-
-    // if user data exists
-
-    
-
-    // return userDocRef
-}
+  // return userDocRef
+};
