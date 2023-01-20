@@ -6,6 +6,7 @@ import {
   signInWithRedirect,
   signInWithPopup,
   GoogleAuthProvider,
+  createUserWithEmailAndPassword,
 } from "firebase/auth";
 
 // setting up fireStore for database
@@ -66,8 +67,9 @@ export const createUserDocumentFromAuth = async (userAuth) => {
       console.log("error.creating user:", error.message);
     }
   }
+};
 
-  // if user data exists
-
-  // return userDocRef
+export const createAuthUserWithEmailAndPassword = async (email, password) => {
+  if (!email || !password) return;
+  return await createUserWithEmailAndPassword(auth, email, password);
 };
