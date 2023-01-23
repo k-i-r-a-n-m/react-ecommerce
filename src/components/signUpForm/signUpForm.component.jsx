@@ -5,7 +5,7 @@ import {
 } from "../../utils/firebase/firebase.utils";
 
 import FormInput from "../formInput/formInput.component";
-import Button from '../button/button.component'
+import Button from "../button/button.component";
 
 import "./signUpForm.styles.scss";
 
@@ -95,7 +95,8 @@ const SignUpForm = () => {
           required
         />
 
-        <Button buttonType="" type="submit">Sign Up</Button>
+        <Button type="submit">Sign In</Button>
+       
       </form>
     </div>
   );
