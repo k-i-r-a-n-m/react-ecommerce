@@ -8,6 +8,7 @@ import {
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signOut
 } from "firebase/auth";
 
 // setting up fireStore for database
@@ -47,7 +48,7 @@ export const createUserDocumentFromAuth = async (userAuth) => {
   // getting document reference is like primary key
   const userDocRef = doc(db, "users", userAuth.uid);
 
-  console.log(userDocRef);
+  // console.log(userDocRef);
 
   // getting a document using getDoc('id')
   const userSnapshot = await getDoc(userDocRef);
@@ -79,3 +80,8 @@ export const signInAuthUserWithEmailAndPassword = async (email, password) => {
   if (!email || !password) return;
   return await signInWithEmailAndPassword(auth, email, password);
 };
+
+
+export const signOutUser = async()=>{
+  return await signOut(auth)
+}
