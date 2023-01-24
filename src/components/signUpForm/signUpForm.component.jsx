@@ -40,7 +40,7 @@ const SignUpForm = () => {
 
       user.displayName = displayName;
       // setting the userContext value
-      setCurrentUser(user)
+      // setCurrentUser(user)  -----> handled by the onAuthStateChange (firebase/utils)
       createUserDocumentFromAuth(user);
       resetFormFields();
     } catch (error) {
