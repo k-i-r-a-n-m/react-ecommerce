@@ -4,15 +4,23 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 
+// contexts
 import { UserProvider } from "./contexts/user.context";
+import { ProductsProvider } from "./contexts/products.context";
+import { CartDropdownProvider } from "./contexts/cardDropdown.contex";
 
+// css
 import "./index.scss";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
     <UserProvider>
-      <App />
+      <ProductsProvider>
+        <CartDropdownProvider>
+          <App />
+        </CartDropdownProvider>
+      </ProductsProvider>
     </UserProvider>
   </BrowserRouter>
 );
