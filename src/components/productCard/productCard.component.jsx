@@ -4,14 +4,13 @@ import { useContext } from "react";
 import Button from "../button/button.component";
 
 // contexts
-import { CartDropdownContext } from "../../contexts/cardDropdown.contex";
+import { CartDropdownContext } from "../../contexts/cardDropdown.context";
 
 // css
 import "./productCard.styles.scss";
 
 const ProductCard = ({ product }) => {
   const { name, price, imageUrl } = product;
- 
 
   const { addItemToCart } = useContext(CartDropdownContext);
 

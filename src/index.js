@@ -7,7 +7,7 @@ import { BrowserRouter } from "react-router-dom";
 // contexts
 import { UserProvider } from "./contexts/user.context";
 import { ProductsProvider } from "./contexts/products.context";
-import { CartDropdownProvider } from "./contexts/cardDropdown.contex";
+import { CartDropdownProvider } from "./contexts/cardDropdown.context";
 
 // css
 import "./index.scss";

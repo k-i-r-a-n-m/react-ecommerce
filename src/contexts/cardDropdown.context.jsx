@@ -1,9 +1,9 @@
-import { createContext, useState } from "react";
+import { createContext, useState,useEffect } from "react";
 
 const addCartItem = (cartItems, productToAdd) => {
   // find if cartItems contains productToAdd
   const existingCartItem = cartItems.find(
-    (cartitem) => cartitem.id === productToAdd.id
+    (cartItem) => cartItem.id === productToAdd.id
   );
 
   // if found, increment quantity
@@ -20,22 +20,35 @@ const addCartItem = (cartItems, productToAdd) => {
   return [...cartItems, { ...productToAdd, quantity: 1 }];
 };
 
+const countCartItems = (cartItem)=>{
+  const total = cartItem.reduce((accum,curValue)=>accum+curValue.quantity,0)
+}
+
 export const CartDropdownContext = createContext({
   isCartOpen: null,
   setIsCartOpen: () => null,
   cartItems: [],
   addItemToCart: () => null,
+  cartCount:0
 });
 
 export const CartDropdownProvider = ({ children }) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [cartItems, setCartItem] = useState([]);
+  const [cartCount, setCartCount] = useState(0);
+
+  useEffect(()=>{
+   const newCartCount = cartItems.reduce((total,cartItem)=>total+cartItem.quantity,0)
+   setCartCount(newCartCount)
+  },[cartItems]);
 
   const addItemToCart = (productToAdd) => {
     setCartItem(addCartItem(cartItems, productToAdd));
   };
 
-  const value = { isCartOpen, setIsCartOpen, addItemToCart };
+  countCartItems(cartItems)
+  
+  const value = { isCartOpen, cartItems,cartCount,setIsCartOpen, addItemToCart };
 
   return (
     <CartDropdownContext.Provider value={value}>
