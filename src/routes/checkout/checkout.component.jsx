@@ -4,8 +4,8 @@ import { CartDropdownContext } from "../../contexts/cardDropdown.context";
 import "./checkout.styles.scss";
 
 const Checkout = () => {
-  const { cartItems } = useContext(CartDropdownContext);
-  
+  const { cartItems,addItemToCart } = useContext(CartDropdownContext);
+
   return (
     <div>
       <h1>I am the checkout page</h1>
@@ -15,7 +15,9 @@ const Checkout = () => {
           return (
             <div key={id}>
               <h2>{name}</h2>
-              <span>{quantity}</span>
+              <button>-</button> &nbsp;
+              <span>{quantity}</span> &nbsp;
+              <button onClick={() => addItemToCart(cartItem)}>+</button>
             </div>
           );
         })}
