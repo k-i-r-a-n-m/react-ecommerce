@@ -1,36 +1,9 @@
-// import { createContext, useState, useEffect } from "react";
-
-// import {addCollectionAndDocuments} from '../utils/firebase/firebase.utils'
-
-// import SHOP_DATA from "../shopData.js";
-
-
-
-// export const ProductsContext = createContext({
-//   products: [],
-//   setProducts: () => null,
-// });
-
-// export const ProductsProvider = ({ children }) => {
-//   const [products, setProducts] = useState([]);
-
-//   useEffect(() => {
-//     addCollectionAndDocuments('categories', SHOP_DATA)
-//     console.log(SHOP_DATA);
-//    },[])
-
-//   const value = { products, setProducts };
-//   return (
-//     <ProductsContext.Provider value={value}>
-//       {children}
-//     </ProductsContext.Provider>
-//   );
-// };
-
-
 import { createContext, useState, useEffect } from "react";
 
-import { addCollectionAndDocuments } from "../utils/firebase/firebase.utils";
+import {
+  addCollectionAndDocuments,
+  getCategoriesAndDocuments,
+} from "../utils/firebase/firebase.utils";
 
 import SHOP_DATA from "../shopData.js";
 
@@ -41,8 +14,19 @@ export const ProductsContext = createContext({
 export const ProductsProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
 
+  //! Use this code to populate the firebase with categories collection and documents(hats,jackets...)
+  //   useEffect(() => {
+  //     addCollectionAndDocuments('categories', SHOP_DATA)
+  //     console.log(SHOP_DATA);
+  //    },[])
+
   useEffect(() => {
-    addCollectionAndDocuments('collections', SHOP_DATA);
+    const getCategoriesMap = async () => {
+      const categoryMap = await getCategoriesAndDocuments();
+      console.log({ categoryMap });
+    };
+
+    getCategoriesMap();
   }, []);
 
   const value = { products };

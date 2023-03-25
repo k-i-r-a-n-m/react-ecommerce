@@ -20,6 +20,8 @@ import {
   setDoc,
   collection,
   writeBatch,
+  query,
+  getDocs,
 } from "firebase/firestore";
 
 // basic config for firebase instance connection
@@ -53,20 +55,6 @@ export const siginInWithGoogleRedirect = () =>
 export const db = getFirestore();
 
 // Populating the fireStore database with collection(CATEGORIES) and documents(HAT,SNEKERS...etc)
-// export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
-//   const collectionRef = collection(db, collectionKey);
-//   const batch = writeBatch(db)
-
-//   objectsToAdd.forEach((object) => {
-//     const docRef = doc(collectionRef, object.title.toLowerCase())
-//     batch.set(docRef,object)
-//   })
-
-//   await batch.commit()
-//   console.log('done')
-// }
-
-// Checking-----------------------
 export const addCollectionAndDocuments = async (
   collectionKey,
   objectsToAdd
@@ -81,6 +69,34 @@ export const addCollectionAndDocuments = async (
 
   await batch.commit();
   console.log("done");
+};
+
+// getting data from firestore (shop page categories)
+export const getCategoriesAndDocuments = async () => {
+  const collectionRef = collection(db, "categories");
+  const q = query(collectionRef);
+
+  const querySnapshot = await getDocs(q);
+  const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
+    const { title, items } = docSnapshot.data();
+    acc[title.toLowerCase()] = items;
+    return acc;
+  }, {});
+
+  return categoryMap;
+
+  // ! The above code get the data from the firestore and create a snapshot of it.
+  // ! and map the data into following structure using REDUCE
+  // {
+  //     hats: {
+  //       title: 'Hats',
+  //         items: [
+  //           {},
+  //           {},
+  //           ...
+  //         ]
+  //     }
+  // }
 };
 
 export const createUserDocumentFromAuth = async (userAuth) => {
