@@ -13,7 +13,14 @@ import {
 } from "firebase/auth";
 
 // setting up fireStore for database
-import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  collection,
+  writeBatch,
+} from "firebase/firestore";
 
 // basic config for firebase instance connection
 const firebaseConfig = {
@@ -44,6 +51,37 @@ export const siginInWithGoogleRedirect = () =>
 
 // initialize fireStore
 export const db = getFirestore();
+
+// Populating the fireStore database with collection(CATEGORIES) and documents(HAT,SNEKERS...etc)
+// export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
+//   const collectionRef = collection(db, collectionKey);
+//   const batch = writeBatch(db)
+
+//   objectsToAdd.forEach((object) => {
+//     const docRef = doc(collectionRef, object.title.toLowerCase())
+//     batch.set(docRef,object)
+//   })
+
+//   await batch.commit()
+//   console.log('done')
+// }
+
+// Checking-----------------------
+export const addCollectionAndDocuments = async (
+  collectionKey,
+  objectsToAdd
+) => {
+  const batch = writeBatch(db);
+  const collectionRef = collection(db, collectionKey);
+
+  objectsToAdd.forEach((object) => {
+    const docRef = doc(collectionRef, object.title.toLowerCase());
+    batch.set(docRef, object);
+  });
+
+  await batch.commit();
+  console.log("done");
+};
 
 export const createUserDocumentFromAuth = async (userAuth) => {
   // getting document reference is like primary key
@@ -86,7 +124,7 @@ export const signOutUser = async () => {
   return await signOut(auth);
 };
 
-//Listens for the auth-change and 
+//Listens for the auth-change and
 // the current user-object is passed as an argument to the callback by firebase
 export const onAuthStateChangedListener = (callback) =>
   onAuthStateChanged(auth, callback);

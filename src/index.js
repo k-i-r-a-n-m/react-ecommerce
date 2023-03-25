@@ -29,3 +29,7 @@ root.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+
+
+
+// ! set HTTPS=true&&npm start   --> to run the ract project as https instead of http
