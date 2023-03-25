@@ -6,7 +6,7 @@ import { BrowserRouter } from "react-router-dom";
 
 // contexts
 import { UserProvider } from "./contexts/user.context";
-import { ProductsProvider } from "./contexts/products.context";
+import { CategoriesProvider } from "./contexts/categories.context";
 import { CartDropdownProvider } from "./contexts/cardDropdown.context";
 
 // css
@@ -16,11 +16,11 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
     <UserProvider>
-      <ProductsProvider>
+      <CategoriesProvider>
         <CartDropdownProvider>
           <App />
         </CartDropdownProvider>
-      </ProductsProvider>
+      </CategoriesProvider>
     </UserProvider>
   </BrowserRouter>
 );
